@@ -1,0 +1,12 @@
+<p>How Sweet :)</p>
+<!--Type icone sweetAlert : success,error,warning,info,question-->
+<button [swal]="['Niveau 1','Niveau elementaire sweet alert' :),'success']">Click me</button>
+<br><br>
+<button [swal]="{
+    title:'',
+    input:'text'
+}"
+(confirm)="saveTVshow($event)"
+(cancel)="cancelTVshow($event)"
+>Série préférée</button> {{message}}
+<br><b>{{favoriteTvShow}}</b>
