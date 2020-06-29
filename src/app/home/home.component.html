@@ -1,9 +1,9 @@
 <p>How Sweet :)</p>
 <!--Type icone sweetAlert : success,error,warning,info,question-->
-<button [swal]="['Niveau 1','Niveau elementaire sweet alert' :),'success']">Click me</button>
+<button [swal]="['Niveau 1','Niveau elementaire sweet alert','success']">Click me</button>
 <br><br>
 <button [swal]="{
-    title:'',
+    title:'Quel serie de film préférez-vous',
     input:'text'
 }"
 (confirm)="saveTVshow($event)"
