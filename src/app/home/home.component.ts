@@ -12,6 +12,10 @@ export class HomeComponent implements OnInit {
   message;
   favoriteTvShow;
   URL = 'https://api.themoviedb.org/3/search/movie?api_key=';
+  imgURL ='https://image.tmdb.org/t/p/w500';
+  imgSrc;
+  //results;
+  results:Movie[];
   constructor(private http : HttpClient) { }
 
   ngOnInit(): void {
@@ -23,16 +27,18 @@ export class HomeComponent implements OnInit {
       'Authorization':`Bearer ${keys.theMovieDB}`
     }
 
-    this.http.get<Movie>(`${this.URL}${keys.theMovieDB}&query=${movieName}`,{headers:headers})
+    //this.http.get<Movie>(`${this.URL}${keys.theMovieDB}&query=${movieName}`,{headers:headers})
+    this.http.get<Movie>(`${this.URL}${keys.theMovieDB}&query=${movieName}&language=fr`,{headers:headers})
     .subscribe(data => {
       console.log("data  : ",data);
+      this.results = data.results;
     },
       err => {
         console.error("error : ",err);
       })
   }
 
-  saveTVshow(tvshow) {
+  retrieveTitle(tvshow) {
     console.log("tvshow save :",tvshow);
     this.favoriteTvShow = tvshow;
     //Recherche de film en anglais, on peut configurer la recherche des films en français.Exemple : un (Pas des resultats)
@@ -40,7 +46,7 @@ export class HomeComponent implements OnInit {
     this.getMovie(tvshow);
   }
 
-  cancelTVshow(e) {
+  cancelRetrieveTitle(e) {
     console.log("event cancel:",e);
     switch(e ) {
       case 'esc' :

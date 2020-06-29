@@ -3,10 +3,22 @@
 <button [swal]="['Niveau 1','Niveau elementaire sweet alert','success']">Click me</button>
 <br><br>
 <button [swal]="{
-    title:'Quel serie de film préférez-vous',
+    title:'Saisir un titre',
     input:'text'
 }"
-(confirm)="saveTVshow($event)"
-(cancel)="cancelTVshow($event)"
->Série préférée</button> {{message}}
+(confirm)="retrieveTitle($event)"
+(cancel)="cancelRetrieveTitle($event)"
+>Chercher un film</button> {{message}}
 <br><b>{{favoriteTvShow}}</b>
+
+<div class="results" *ngIf="results && results.length">
+    <div class="movie" *ngFor="let movie of results">
+        <h3>{{movie.original_title.length < 10 ? movie.original_title : movie.original_title.slice(0,9)+'...'}}</h3>
+        <div *ngIf="movie.poster_path">
+            <img [src]="imgURL+movie.poster_path" [alt]="movie.original_title" [title]="movie.original_title">
+        </div>
+        <div *ngIf="!movie.poster_path">
+            Pas d'image ...
+        </div>
+    </div>
+</div>
