@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { keys } from 'my-keys';
 import { Movie } from '../models/movie';
 
@@ -16,6 +17,9 @@ export class HomeComponent implements OnInit {
   imgSrc;
   //results;
   results:Movie[];
+
+  @ViewChild('movieSwal') private movieSwal : SwalComponent;
+
   constructor(private http : HttpClient) { }
 
   ngOnInit(): void {
@@ -63,6 +67,15 @@ export class HomeComponent implements OnInit {
 
    hideMessage(ms:number) {
     setTimeout(()=>this.message = '',ms)
+  }
+
+  showOverview(movie:Movie) {
+    this.movieSwal.update({
+      icon:'success',
+      title:`${movie.title}`,
+      imageUrl:`${this.imgURL}${movie.poster_path}`,
+      text:`${movie.release_date}${movie.overview}`
+    })
   }
 
 }
