@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit {
   //results;
   results:Movie[];
 
+  //On recupère la swal qui a pour id movieswal grâce au décorateurViewChild
+  //et on l'associe à une propriété typescript movieSwal de type SwalComponent
   @ViewChild('movieSwal') private movieSwal : SwalComponent;
 
   constructor(private http : HttpClient) { }
@@ -74,8 +76,19 @@ export class HomeComponent implements OnInit {
       icon:'success',
       title:`${movie.title}`,
       imageUrl:`${this.imgURL}${movie.poster_path}`,
-      text:`${movie.release_date}${movie.overview}`
-    })
+      text:`${this.formatRealDate(movie.release_date)} - ${movie.overview}`
+    });
+    this.movieSwal.fire(); //On le déclenche dynamiquement
+  }
+
+  formatRealDate(releaseDateInString:string) {
+    const dateParts = releaseDateInString.split('-');
+    if(dateParts.length > 0) {
+       return `Année de parution ${dateParts[0]}`
+
+    } else {
+      return '';
+    }
   }
 
 }
